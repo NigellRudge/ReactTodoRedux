@@ -7,11 +7,11 @@ import { deleteAllItems } from "../data/todoSlice";
 const DeleteAllButton = ()=>{
     const [color, setColor] = useState<string>('text-gray-400')
     const dispatch = useDispatch()
-    const activeFilter = useSelector((state:StateType)=>{
-        return state.activeFilter
+    const activeFilter = useSelector((state:any)=>{
+        return state.todo.activeFilter
     })
-    const render = useSelector((state:StateType)=>{
-        return filterItems(state.todoItems,activeFilter).length > 0;
+    const render = useSelector((state:any)=>{
+        return filterItems(state.todo.todoItems,activeFilter).length > 0;
     })
     const click = ()=>{
         return dispatch(deleteAllItems(activeFilter))
