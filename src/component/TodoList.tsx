@@ -6,6 +6,7 @@ import { useSelector, useDispatch, connect } from 'react-redux';
 import { StateType } from '../data/reducers';
 import { setFilter } from "../data/actions";
 import { filterItems } from "../utils/functions";
+import { changeFilter } from '../data/todoSlice';
 
 interface ListProps {
     items:Todo[]
@@ -52,13 +53,13 @@ const Item = ({item}: ItemProps)=>{
 }
 
 const FilterRow = ()=>{
-    const activeFilter = useSelector((state:StateType)=>{
-        return state.activeFilter
+    const activeFilter = useSelector((state:any)=>{
+        return state.todo.activeFilter
     })
     const dispatch = useDispatch();
-    const changeFilter = useCallback( 
+    const change = useCallback( 
         (newFilter:FilterTypes)=>{
-        dispatch(setFilter(newFilter))
+        dispatch(changeFilter(newFilter))
       },[dispatch]
     )
     useEffect(()=>{
@@ -70,11 +71,11 @@ const FilterRow = ()=>{
                             return;
                         }
                         case FilterTypes.PENDING:{   
-                            changeFilter(FilterTypes.ALL);
+                            change(FilterTypes.ALL);
                             return;
                         }
                         case FilterTypes.COMPLETED:{
-                            changeFilter(FilterTypes.PENDING);
+                            change(FilterTypes.PENDING);
                             return;
                         }
                     }
@@ -82,11 +83,11 @@ const FilterRow = ()=>{
                 else if(key === 'ArrowRight'){         
                     switch(activeFilter){
                         case FilterTypes.ALL:{
-                            changeFilter(FilterTypes.PENDING);
+                            change(FilterTypes.PENDING);
                             return;
                         }
                         case FilterTypes.PENDING:{
-                            changeFilter(FilterTypes.COMPLETED);
+                            change(FilterTypes.COMPLETED);
                             return;
                         }
                         case FilterTypes.COMPLETED:{
@@ -106,15 +107,15 @@ const FilterRow = ()=>{
 
     return (
         <div className='flex flex-row px-2 py-1'>
-            <span onClick={()=>changeFilter(FilterTypes.ALL)} className={'mx-2 ' + (activeFilter === FilterTypes.ALL? activeFilterStyle:inActiveFilterStyle) }>All</span>
-            <span onClick={()=>changeFilter(FilterTypes.PENDING)}  className={'mx-2 ' + (activeFilter === FilterTypes.PENDING? activeFilterStyle:inActiveFilterStyle) }>Pending</span>
-            <span onClick={()=>changeFilter(FilterTypes.COMPLETED)}  className={'mx-2 ' + (activeFilter === FilterTypes.COMPLETED? activeFilterStyle:inActiveFilterStyle) }>Completed</span>
+            <span onClick={()=>change(FilterTypes.ALL)} className={'mx-2 ' + (activeFilter === FilterTypes.ALL? activeFilterStyle:inActiveFilterStyle) }>All</span>
+            <span onClick={()=>change(FilterTypes.PENDING)}  className={'mx-2 ' + (activeFilter === FilterTypes.PENDING? activeFilterStyle:inActiveFilterStyle) }>Pending</span>
+            <span onClick={()=>change(FilterTypes.COMPLETED)}  className={'mx-2 ' + (activeFilter === FilterTypes.COMPLETED? activeFilterStyle:inActiveFilterStyle) }>Completed</span>
         </div>
     )
 }
 
-function mapStateToProps(state:StateType){
-    const {todoItems,activeFilter} = state
+function mapStateToProps(state:any){
+    const {todoItems,activeFilter} = state.todo
     return {items:filterItems(todoItems,activeFilter)};
 }
 

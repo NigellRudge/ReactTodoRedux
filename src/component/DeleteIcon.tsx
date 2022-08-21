@@ -1,4 +1,5 @@
 import React from "react"
+import { remove } from "../data/todoSlice";
 import { useDispatch } from 'react-redux';
 import { removeAction } from "../data/actions";
 
@@ -8,7 +9,7 @@ interface IProps {
 const DeleteIcon = ({id}:IProps)=>{
     const dispatch = useDispatch();
     const click = ()=>{
-        dispatch(removeAction(id))
+        dispatch(remove(id))
       }
     return (
         <div onClick={click} className=" mx-0.5 bg-red-400 p-2 rounded-lg">
