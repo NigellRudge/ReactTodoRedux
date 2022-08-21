@@ -1,4 +1,5 @@
 import React from "react";
+import { toggle } from "../data/todoSlice";
 import { useDispatch } from "react-redux";
 import { toggleAction } from "../data/actions";
 
@@ -10,7 +11,7 @@ interface IProps {
 const StatusIcon = ({completed,id}:IProps)=>{
     const dispatch = useDispatch();
     const click = ()=>{
-        dispatch(toggleAction(id))
+        dispatch(toggle(id))
     }
 
     if(completed){

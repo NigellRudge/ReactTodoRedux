@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { StateType } from "../data/reducers";
 import { filterItems } from "../utils/functions";
-import { createDeleteAll } from "../data/actions";
+import { deleteAllItems } from "../data/todoSlice";
 
 const DeleteAllButton = ()=>{
     const [color, setColor] = useState<string>('text-gray-400')
@@ -14,7 +14,7 @@ const DeleteAllButton = ()=>{
         return filterItems(state.todoItems,activeFilter).length > 0;
     })
     const click = ()=>{
-        return dispatch(createDeleteAll(activeFilter))
+        return dispatch(deleteAllItems(activeFilter))
     }
 
     const onBeginHover = ()=>{

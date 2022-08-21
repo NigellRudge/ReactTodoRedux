@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { add } from "../data/todoSlice";
 import { useDispatch } from 'react-redux';
-import { addAction } from "../data/actions";
 
 const TodoInput = ()=>{
     const [title, setTilte] = useState<string>('')
@@ -11,7 +11,7 @@ const TodoInput = ()=>{
         setTilte(value)
     }
     const handler = ()=>{
-      dispatch(addAction(title))
+      dispatch(add(title))
       setTilte('');
     }
 
