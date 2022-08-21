@@ -1,30 +1,28 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { addAction } from "../data/actions";
 
-interface IProps {
-    onAddClick: (title:string)=>void,
-}
-
-
-const TodoInput = ({onAddClick}: IProps)=>{
+const TodoInput = ()=>{
     const [title, setTilte] = useState<string>('')
+    const dispatch = useDispatch()
 
     const onTextChange = (event:React.ChangeEvent<HTMLInputElement>)=>{
         let value = event.currentTarget.value;
         setTilte(value)
     }
     const handler = ()=>{
-      onAddClick(title)
+      dispatch(addAction(title))
       setTilte('');
     }
 
     useEffect(()=>{
       const captureKeyBoardEvent = (event: KeyboardEvent)=>{
-        if(event.key == 'Enter'){
+        if(event.key === 'Enter'){
           if(title.length >= 4){
             handler();
           }
         }
-        if(event.key == 'Escape'){
+        if(event.key === 'Escape'){
           setTilte('');
         }
       }

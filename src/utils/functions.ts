@@ -38,8 +38,6 @@ export function removeItem(items:Todo[],id:number):Todo[]{
     let output = items.filter((item, index)=>{
         return item.id !== id
     });
-    console.log(output);
-    
     return  output;
 }
 
@@ -50,8 +48,6 @@ export function toggleItem(items:Todo[], id:number):Todo[]{
     let index = items.indexOf(item);
     item.completed = !item.completed;
     items[index] = item;
-    console.log(items);
-    
     return items;
 }
 
@@ -79,4 +75,26 @@ export function filterItems(items:Todo[], filter:FilterTypes):Todo[]{
             break;
     }
     return output;
+}
+
+export function deleteAll(items:Todo[],filter:FilterTypes):Todo[]{
+    switch(filter){
+        case FilterTypes.ALL:{
+          return [];
+        }
+        case FilterTypes.PENDING:{
+          let temp = items.filter((element,index)=>{
+            return element.completed;
+          })
+          return temp;
+        }
+        case FilterTypes.COMPLETED:{
+          let temp = items.filter((element,index)=>{
+            return !element.completed;
+          })
+          return temp;
+        }
+        default:
+            return items;
+      } 
 }
